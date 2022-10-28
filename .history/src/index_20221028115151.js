@@ -6,10 +6,7 @@ function makeLoader() {
         const callback = this.async();
         const filename = this.resourcePath;
 
-        let loaderOptions =
-            (typeof this.getOptions === "function"
-                ? this.getOptions()
-                : require("loader-utils").getOptions(this)) || {};
+        let loaderOptions = (typeof this.getOptions === 'function' ? this.getOptions() : require('loader-utils').getOptions(this)) || {};
 
         // Standardize on 'sourceMaps' as the key passed through to Webpack, so that
         // users may safely use either one alongside our default use of
@@ -61,18 +58,10 @@ function makeLoader() {
         delete programmaticOptions.metadataSubscribers;
 
         // auto detect development mode
-        if (
-            this.mode &&
-            programmaticOptions.jsc &&
-            programmaticOptions.jsc.transform &&
-            programmaticOptions.jsc.transform.react &&
-            !Object.prototype.hasOwnProperty.call(
-                programmaticOptions.jsc.transform.react,
-                "development"
-            )
-        ) {
-            programmaticOptions.jsc.transform.react.development =
-                this.mode === "development";
+        if (this.mode && programmaticOptions.jsc && programmaticOptions.jsc.transform
+            && programmaticOptions.jsc.transform.react &&
+            !Object.prototype.hasOwnProperty.call(programmaticOptions.jsc.transform.react, "development")) {
+            programmaticOptions.jsc.transform.react.development = this.mode === 'development'
         }
 
         if (programmaticOptions.sourceMaps === "inline") {
@@ -91,7 +80,7 @@ function makeLoader() {
                 callback(
                     null,
                     output.code,
-                    parseMap ? JSON.parse(output.map ?? null) : output.map
+                    parseMap ? JSON.parse(output.map) : output.map
                 );
             } else {
                 swc.transform(source, programmaticOptions).then(
@@ -99,9 +88,7 @@ function makeLoader() {
                         callback(
                             null,
                             output.code,
-                            parseMap
-                                ? JSON.parse(output.map ?? null)
-                                : output.map
+                            parseMap ? JSON.parse(output.map) : output.map
                         );
                     },
                     (err) => {

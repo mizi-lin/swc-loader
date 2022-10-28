@@ -99,9 +99,7 @@ function makeLoader() {
                         callback(
                             null,
                             output.code,
-                            parseMap
-                                ? JSON.parse(output.map ?? null)
-                                : output.map
+                            parseMap ? JSON.parse(output.map) : output.map
                         );
                     },
                     (err) => {
